@@ -115,6 +115,39 @@ function afficherTout() {
     });
 }
 
+function ouvrirEdition(id) {
+    const idee = idees.find(i => i.id === parseInt(id));
+    if (!idee) return;
+
+    idEnCoursEdition = id;
+
+    editTitre.value       = idee.titre;
+    editCategorie.value   = idee.categorie;
+    editDescription.value = idee.description;
+
+    modalEditer.show();
+}
+
+btnSauvegarder.addEventListener("click", () => {
+    const titre       = editTitre.value.trim();
+    const categorie   = editCategorie.value;
+    const description = editDescription.value.trim();
+
+    if (!titre || !categorie || !description) return;
+
+    const index = idees.findIndex(i => i.id === idEnCoursEdition);
+    if (index === -1) return;
+
+    idees[index].titre       = titre;
+    idees[index].categorie   = categorie;
+    idees[index].description = description;
+
+    sauvegarder();
+    afficherTout();
+    modalEditer.hide();
+    idEnCoursEdition = null;
+});
+
 
 
 afficherTout();
