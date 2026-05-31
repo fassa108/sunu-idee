@@ -16,14 +16,14 @@ Aucune authentification n'est requise. Le projet repose sur la manipulation dyna
 
 ##  Fonctionnalités
 
-**CREATE** : Soumettre une idée avec un titre, une catégorie et une description 
-**READ** : Afficher toutes les idées sous forme de cartes sur le mur 
-**UPDATE** : Modifier une idée existante via une modale d'édition 
-**DELETE** : Supprimer définitivement une idée du tableau et du stockage 
+- **CREATE** : Soumettre une idée avec un titre, une catégorie et une description 
+- **READ** : Afficher toutes les idées sous forme de cartes sur le mur 
+- **UPDATE** : Modifier une idée existante via une modale d'édition 
+- **DELETE** : Supprimer définitivement une idée du tableau et du stockage 
 
 ---
 
-## 🛠️ Technologies utilisées
+## Technologies utilisées
 
 - **HTML5** — Structure de la page
 - **CSS3** — Styles personnalisés
