@@ -148,6 +148,13 @@ btnSauvegarder.addEventListener("click", () => {
     idEnCoursEdition = null;
 });
 
+function supprimerIdee(id) {
+    const confirmation = confirm("Supprimer définitivement cette idée ?");
+    if (!confirmation) return;
 
+    idees = idees.filter(i => i.id !== parseInt(id));
+    sauvegarder();
+    afficherTout();
+}
 
 afficherTout();
