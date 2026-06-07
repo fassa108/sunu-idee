@@ -1,20 +1,22 @@
-const inputTitre       = document.querySelector("#titre");
-const inputCategorie   = document.querySelector("#categorie");
+
+const inputTitre = document.querySelector("#titre");
+const inputCategorie = document.querySelector("#categorie");
 const inputDescription = document.querySelector("#description");
-const btnSoumettre     = document.querySelector("#btn-soumettre");
-const btnReset         = document.querySelector("#btn-reset");
-const messageForm      = document.querySelector("#message-form");
-const mur              = document.querySelector("#mur");
-const messageVide      = document.querySelector("#message-vide");
-const compteur         = document.querySelector("#compteur");
+const btnSoumettre = document.querySelector("#btn-soumettre");
+const btnReset = document.querySelector("#btn-reset");
+const messageForm = document.querySelector("#message-form");
+const mur = document.querySelector("#mur");
+const messageVide = document.querySelector("#message-vide");
+const compteur = document.querySelector("#compteur");
 
 // Modale 
-const editTitre        = document.querySelector("#edit-titre");
-const editCategorie    = document.querySelector("#edit-categorie");
-const editDescription  = document.querySelector("#edit-description");
-const btnSauvegarder   = document.querySelector("#btn-sauvegarder");
-const modalEditer      = new bootstrap.Modal(document.querySelector("#modalEditer"));
-
+const editTitre = document.querySelector("#edit-titre");
+const editCategorie = document.querySelector("#edit-categorie");
+const editDescription = document.querySelector("#edit-description");
+const btnSauvegarder = document.querySelector("#btn-sauvegarder");
+const modalEditer = new bootstrap.Modal(document.querySelector("#modalEditer"));
+modalAjout = document.getElementById('modal-ajout')
+// modalAjout.style.display = "none"
 
 let idees = JSON.parse(localStorage.getItem("sunu-idees")) || [];
 let idEnCoursEdition = null;
@@ -88,10 +90,10 @@ function afficherTout() {
     compteur.textContent = `${idees.length} idée(s)`;
 
     idees.forEach(idee => {
-        const col = document.createElement("div");
-        col.classList.add("col-md-6", "col-xl-4");
+        const liste = document.createElement("div");
+        liste.classList.add("col-md-6", "col-xl-4");
 
-        col.innerHTML = `
+        liste.innerHTML = `
             <div class="card h-100 shadow-sm border-0 carte-idee">
                 <div class="card-body d-flex flex-column">
                     <div class="d-flex justify-content-between align-items-start mb-2">
@@ -111,7 +113,7 @@ function afficherTout() {
             </div>
         `;
 
-        mur.appendChild(col);
+        mur.appendChild(liste);
     });
 }
 
@@ -129,18 +131,19 @@ function ouvrirEdition(id) {
 }
 
 btnSauvegarder.addEventListener("click", () => {
+    
     const titre       = editTitre.value.trim();
     const categorie   = editCategorie.value;
     const description = editDescription.value.trim();
 
     if (!titre || !categorie || !description) return;
 
-    const index = idees.findIndex(i => i.id === idEnCoursEdition);
-    if (index === -1) return;
+    const idee = idees.find(i => i.id === parseInt(idEnCoursEdition));
+    if (!idee) return;
 
-    idees[index].titre       = titre;
-    idees[index].categorie   = categorie;
-    idees[index].description = description;
+    idee.titre       = titre;
+    idee.categorie   = categorie;
+    idee.description = description;
 
     sauvegarder();
     afficherTout();
@@ -158,3 +161,25 @@ function supprimerIdee(id) {
 }
 
 afficherTout();
+
+inputTitre.addEventListener("blur", genererCategorie)
+
+
+async function genererCategorie(){
+    const titre = document.getElementById("titre").value
+    const resultat = await fetch("http://localhost:11434/api/generate",{
+        method : "POST",
+
+        headers : { "Content-Type" : "application/json"},
+
+        body : JSON.stringify({
+            model : "mistral",
+            prompt : `Tu vas choisir la categorie la plus adaptée au titre "${titre}" fourni parmi les element d cette liste de categories : Pédagogie, Événement, Vie de campus et Amélioration technique. tu donne seulement la categorie en reponse et repecte la casse `,
+            stream : false
+        })
+    })
+
+    const donnee = await resultat.json();
+    inputCategorie.value = donnee.response.trim()
+    // alert(donnee.response)
+}

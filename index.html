@@ -33,11 +33,21 @@
     </div>
 
 
-    <main class="container py-4">
-        <div class="row g-4">
+    <main class="container py-4 justify-content-between">
+        <div class="row">
+                <div class="col-8">
 
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-warning text-dark" id="btn-ajout">
+                        <span>Ajouter un idee</span>
+                    </button>
+                </div>
+            </div>
+        <div class="row">
+            
 
-            <div class="col-lg-4">
+            <div class="col-lg-4 " id="modal-ajout" tabindex="-1">
                 <div class="card shadow-sm border-0 sticky-top" style="top: 20px;">
                 <div class="card-header bg-warning text-dark fw-semibold">
                     <i class="bi bi-pencil-fill me-2"></i>Soumettre une idée
@@ -55,6 +65,7 @@
                         <option value="" disabled selected>-- Choisir --</option>
                         <option value="Pédagogie"> Pédagogie</option>
                         <option value="Événement">Événement</option>
+                        <option value="Vie de campus">Vie de campus</option>
                         <option value="Amélioration technique"> Amélioration technique</option>
                     </select>
                     </div>
@@ -145,7 +156,7 @@
     </div>
 
 
-    <footer class="text-center text-muted py-4 border-top mt-4 small">
+    <footer class="text-center text-muted py-4 border-top mt-4 small mb-0">
         Sunu-Idées · Promo P9 · Simplon — Anonyme & Collaboratif
     </footer>
 
